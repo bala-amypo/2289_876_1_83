@@ -23,15 +23,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // Disable CSRF because JWT is used
+            
             .csrf(csrf -> csrf.disable())
 
-            // Stateless session
+            
             .sessionManagement(session ->
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            // Authorization rules
+            
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/auth/**",
@@ -43,13 +43,13 @@ public class SecurityConfig {
                     .anyRequest().denyAll()
             )
 
-            // Add JWT filter
+            
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // Needed for AuthController (login)
+   
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
