@@ -49,7 +49,7 @@ public class VendorPerformanceScoreController {
     /**
      * update latest score for a vendor
      */
-    @eleteMapping("/vendor/{vendorId}")
+    @DeleteMapping("/vendor/{vendorId}")
     public String deleteLatestScore(
             @PathVariable Long vendorId) {
 
