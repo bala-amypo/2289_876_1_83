@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/scores")
-@RequiredArgsConstructor
 public class VendorPerformanceScoreController {
 
     
