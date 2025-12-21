@@ -84,7 +84,7 @@
     </dependencies>
 
 
-    <build>
+    <!-- <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -93,17 +93,17 @@
                     <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
             </plugin>
+        </plugins>
+    </build> -->
 
-            <build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>${project.parent.version}</version>
-        </plugin>
-    </plugins>
-</build>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
+            </plugin>
         </plugins>
     </build>
 
