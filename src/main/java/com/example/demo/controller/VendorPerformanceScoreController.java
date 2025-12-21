@@ -34,6 +34,30 @@ public class VendorPerformanceScoreController {
         return "vendorId: "+ vendorId;
     }
 
+/**
+     * update latest score for a vendor
+     */
+    @PutMapping("/vendor/{vendorId}")
+    public String updateLatestScore(
+            @PathVariable Long vendorId) {
+
+        // VendorPerformanceScoreDto latestScore =
+        //         vendorPerformanceScoreService.getLatestScore(vendorId);
+        return "vendorId: "+ vendorId;
+    }
+
+    /**
+     * update latest score for a vendor
+     */
+    @eleteMapping("/vendor/{vendorId}")
+    public String deleteLatestScore(
+            @PathVariable Long vendorId) {
+
+        // VendorPerformanceScoreDto latestScore =
+        //         vendorPerformanceScoreService.getLatestScore(vendorId);
+        return "vendorId: "+ vendorId;
+    }
+
     /**
      * Get score history for a vendor
      */
