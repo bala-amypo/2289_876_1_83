@@ -65,7 +65,7 @@
     <version>8.3.0</version>
 </dependency>
 
-<!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-models -->
+    <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-models -->
 
     <dependency>
         <groupId>io.swagger.core.v3</groupId>
