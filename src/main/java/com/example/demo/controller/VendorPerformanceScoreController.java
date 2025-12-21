@@ -9,7 +9,7 @@ public class VendorPerformanceScoreController {
      * Calculate score for a vendor
      */
     @PostMapping("/calculate/{vendorId}")
-    public ResponseEntity<VendorPerformanceScoreDto> calculateScore(
+    public ResponseEntity<String> calculateScore(
             @PathVariable Long vendorId) {
 
         // VendorPerformanceScoreDto score =
@@ -21,23 +21,23 @@ public class VendorPerformanceScoreController {
      * Get latest score for a vendor
      */
     @GetMapping("/latest/{vendorId}")
-    public ResponseEntity<VendorPerformanceScoreDto> getLatestScore(
+    public ResponseEntity<String> getLatestScore(
             @PathVariable Long vendorId) {
 
-        VendorPerformanceScoreDto latestScore =
-                vendorPerformanceScoreService.getLatestScore(vendorId);
-        return ResponseEntity.ok(latestScore);
+        // VendorPerformanceScoreDto latestScore =
+        //         vendorPerformanceScoreService.getLatestScore(vendorId);
+        return ResponseEntity.ok("vendorId: "+ vendorId);
     }
 
     /**
      * Get score history for a vendor
      */
     @GetMapping("/vendor/{vendorId}")
-    public ResponseEntity<List<VendorPerformanceScoreDto>> getScoreHistory(
+    public ResponseEntity<String> getScoreHistory(
             @PathVariable Long vendorId) {
 
-        List<VendorPerformanceScoreDto> scores =
-                vendorPerformanceScoreService.getScoreHistory(vendorId);
-        return ResponseEntity.ok(scores);
+        // List<VendorPerformanceScoreDto> scores =
+        //         vendorPerformanceScoreService.getScoreHistory(vendorId);
+        return ResponseEntity.ok("vendorId: "+ vendorId);
     }
 }
