@@ -7,11 +7,11 @@ import java.io.IOException;
 
 public class SimpleStatusServlet extends HttpServlet {
 
-    @Override
-    protected String doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        resp.setContentType("text/plain");
-        resp.getWriter().write("OK");
-        return "OK";
-    }
+    // @Override
+    // protected String doGet(HttpServletRequest req, HttpServletResponse resp)
+    //         throws IOException {
+    //     resp.setContentType("text/plain");
+    //     resp.getWriter().write("OK");
+    //     return "OK";
+    // }
 }
