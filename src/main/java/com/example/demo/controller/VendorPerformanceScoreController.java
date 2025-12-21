@@ -1,7 +1,5 @@
 package com.example.vendor.controller;
 
-import com.example.vendor.service.VendorPerformanceScoreService;
-import com.example.vendor.dto.VendorPerformanceScoreDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
