@@ -73,6 +73,13 @@
             <version>2.2.41</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.9.0</version> <!-- Use the appropriate version -->
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
