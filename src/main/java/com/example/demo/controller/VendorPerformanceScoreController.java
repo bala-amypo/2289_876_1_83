@@ -10,8 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VendorPerformanceScoreController {
 
-    private final VendorPerformanceScoreService vendorPerformanceScoreService;
-
+    
     /**
      * Calculate score for a vendor
      */
@@ -21,7 +20,7 @@ public class VendorPerformanceScoreController {
 
         // VendorPerformanceScoreDto score =
         //         vendorPerformanceScoreService.calculateScore(vendorId);
-        return ResponseEntity.ok("vendorId: "+ vendorId);
+        return "vendorId: "+ vendorId;
     }
 
     /**
@@ -33,7 +32,7 @@ public class VendorPerformanceScoreController {
 
         // VendorPerformanceScoreDto latestScore =
         //         vendorPerformanceScoreService.getLatestScore(vendorId);
-        return ResponseEntity.ok("vendorId: "+ vendorId);
+        return "vendorId: "+ vendorId;
     }
 
     /**
@@ -45,6 +44,6 @@ public class VendorPerformanceScoreController {
 
         // List<VendorPerformanceScoreDto> scores =
         //         vendorPerformanceScoreService.getScoreHistory(vendorId);
-        return ResponseEntity.ok("vendorId: "+ vendorId);
+        return "vendorId: "+ vendorId;
     }
 }
