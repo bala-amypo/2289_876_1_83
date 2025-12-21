@@ -26,11 +26,8 @@
     <dependencies>
         <!-- Web -->
         <dependency>
-            <groupId>org.springframework.boot</grou
-            
-            
-            
-            rtifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId> spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- JPA / Hibernate -->
