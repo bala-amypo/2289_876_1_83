@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "sla_requirements",
+    name = "s
+    la_requirements",
     uniqueConstraints = @UniqueConstraint(columnNames = "requirementName")
 )
 public class SLARequirement {
