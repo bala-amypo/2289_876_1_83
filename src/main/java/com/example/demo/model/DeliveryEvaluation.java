@@ -1,46 +1,72 @@
-package com.example.demo.controller;
+package com.example.demo.model;
 
-import com.example.demo.model.DeliveryEvaluation;
-import com.example.demo.service.DeliveryEvaluationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import jakarta.persistence.*;
+import java.time.LocalDate;
 
-@RestController
-@RequestMapping("/api/evaluations")
-@Tag(name = "Delivery Evaluations", description = "Delivery evaluation management")
-@SecurityRequirement(name = "Bearer Authentication")
-public class DeliveryEvaluationController {
-    private final DeliveryEvaluationService deliveryEvaluationService;
+@Entity
+@Table(name = "delivery_evaluations")
+public class DeliveryEvaluation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public DeliveryEvaluationController(DeliveryEvaluationService deliveryEvaluationService) {
-        this.deliveryEvaluationService = deliveryEvaluationService;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_id", nullable = false)
+    private Vendor vendor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sla_requirement_id", nullable = false)
+    private SLARequirement slaRequirement;
+
+    @Column(name = "actual_delivery_days", nullable = false)
+    private Integer actualDeliveryDays;
+
+    @Column(name = "quality_score", nullable = false)
+    private Double qualityScore;
+
+    @Column(name = "evaluation_date", nullable = false)
+    private LocalDate evaluationDate;
+
+    @Column(name = "meets_delivery_target", nullable = false)
+    private Boolean meetsDeliveryTarget;
+
+    @Column(name = "meets_quality_target", nullable = false)
+    private Boolean meetsQualityTarget;
+
+    public DeliveryEvaluation() {}
+
+    public DeliveryEvaluation(Vendor vendor, SLARequirement slaRequirement, Integer actualDeliveryDays, 
+                            Double qualityScore, LocalDate evaluationDate) {
+        this.vendor = vendor;
+        this.slaRequirement = slaRequirement;
+        this.actualDeliveryDays = actualDeliveryDays;
+        this.qualityScore = qualityScore;
+        this.evaluationDate = evaluationDate;
+        this.meetsDeliveryTarget = actualDeliveryDays <= slaRequirement.getMaxDeliveryDays();
+        this.meetsQualityTarget = qualityScore >= slaRequirement.getMinQualityScore();
     }
 
-    @PostMapping
-    @Operation(summary = "Create delivery evaluation")
-    public ResponseEntity<DeliveryEvaluation> createEvaluation(@RequestBody DeliveryEvaluation evaluation) {
-        return ResponseEntity.ok(deliveryEvaluationService.createEvaluation(evaluation));
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get evaluation by ID")
-    public ResponseEntity<DeliveryEvaluation> getEvaluation(@PathVariable Long id) {
-        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationById(id));
-    }
+    public Vendor getVendor() { return vendor; }
+    public void setVendor(Vendor vendor) { this.vendor = vendor; }
 
-    @GetMapping("/vendor/{vendorId}")
-    @Operation(summary = "Get evaluations for vendor")
-    public ResponseEntity<List<DeliveryEvaluation>> getEvaluationsForVendor(@PathVariable Long vendorId) {
-        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationsForVendor(vendorId));
-    }
+    public SLARequirement getSlaRequirement() { return slaRequirement; }
+    public void setSlaRequirement(SLARequirement slaRequirement) { this.slaRequirement = slaRequirement; }
 
-    @GetMapping("/requirement/{reqId}")
-    @Operation(summary = "Get evaluations for requirement")
-    public ResponseEntity<List<DeliveryEvaluation>> getEvaluationsForRequirement(@PathVariable Long reqId) {
-        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationsForRequirement(reqId));
-    }
+    public Integer getActualDeliveryDays() { return actualDeliveryDays; }
+    public void setActualDeliveryDays(Integer actualDeliveryDays) { this.actualDeliveryDays = actualDeliveryDays; }
+
+    public Double getQualityScore() { return qualityScore; }
+    public void setQualityScore(Double qualityScore) { this.qualityScore = qualityScore; }
+
+    public LocalDate getEvaluationDate() { return evaluationDate; }
+    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
+
+    public Boolean getMeetsDeliveryTarget() { return meetsDeliveryTarget; }
+    public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) { this.meetsDeliveryTarget = meetsDeliveryTarget; }
+
+    public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
+    public void setMeetsQualityTarget(Boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
 }
