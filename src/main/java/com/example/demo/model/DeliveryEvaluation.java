@@ -1,63 +1,46 @@
-// package com.example.demo.model;
+package com.example.demo.controller;
 
-// // import jakarta.persistence.*;
-// // import java.util.Date;
+import com.example.demo.model.DeliveryEvaluation;
+import com.example.demo.service.DeliveryEvaluationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-// // @Entity
-// // @Table(name = "delivery_evaluations")
-// // public class DeliveryEvaluation {
+@RestController
+@RequestMapping("/api/evaluations")
+@Tag(name = "Delivery Evaluations", description = "Delivery evaluation management")
+@SecurityRequirement(name = "Bearer Authentication")
+public class DeliveryEvaluationController {
+    private final DeliveryEvaluationService deliveryEvaluationService;
 
-// //     // @Id
-// //     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-// //     // private Long id;
+    public DeliveryEvaluationController(DeliveryEvaluationService deliveryEvaluationService) {
+        this.deliveryEvaluationService = deliveryEvaluationService;
+    }
 
-// //     // @ManyToOne(optional = false)
-// //     // private Vendor vendor;
+    @PostMapping
+    @Operation(summary = "Create delivery evaluation")
+    public ResponseEntity<DeliveryEvaluation> createEvaluation(@RequestBody DeliveryEvaluation evaluation) {
+        return ResponseEntity.ok(deliveryEvaluationService.createEvaluation(evaluation));
+    }
 
-// //     // @ManyToOne(optional = false)
-// //     // private SLARequirement slaRequirement;
+    @GetMapping("/{id}")
+    @Operation(summary = "Get evaluation by ID")
+    public ResponseEntity<DeliveryEvaluation> getEvaluation(@PathVariable Long id) {
+        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationById(id));
+    }
 
-// //     // private Integer actualDeliveryDays;
-// //     // private Double qualityScore;
+    @GetMapping("/vendor/{vendorId}")
+    @Operation(summary = "Get evaluations for vendor")
+    public ResponseEntity<List<DeliveryEvaluation>> getEvaluationsForVendor(@PathVariable Long vendorId) {
+        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationsForVendor(vendorId));
+    }
 
-// //     // @Temporal(TemporalType.DATE)
-// //     // private Date evaluationDate;
-
-// //     // private Boolean meetsDeliveryTarget;
-// //     // private Boolean meetsQualityTarget;
-
-  
-// //     // public Long getId() { return id; }
-// //     // public void setId(Long id) { this.id = id; }
-
-// //     // public Vendor getVendor() { return vendor; }
-// //     // public void setVendor(Vendor vendor) { this.vendor = vendor; }
-
-// //     // public SLARequirement getSlaRequirement() { return slaRequirement; }
-// //     // public void setSlaRequirement(SLARequirement slaRequirement) {
-// //     //     this.slaRequirement = slaRequirement;
-// //     // }
-
-// //     // public Integer getActualDeliveryDays() { return actualDeliveryDays; }
-// //     // public void setActualDeliveryDays(Integer actualDeliveryDays) {
-// //     //     this.actualDeliveryDays = actualDeliveryDays;
-// //     // }
-
-// //     // public Double getQualityScore() { return qualityScore; }
-// //     // public void setQualityScore(Double qualityScore) { this.qualityScore = qualityScore; }
-
-// //     // public Date getEvaluationDate() { return evaluationDate; }
-// //     // public void setEvaluationDate(Date evaluationDate) {
-// //     //     this.evaluationDate = evaluationDate;
-// //     // }
-
-// //     // public Boolean getMeetsDeliveryTarget() { return meetsDeliveryTarget; }
-// //     // public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) {
-// //     //     this.meetsDeliveryTarget = meetsDeliveryTarget;
-// //     // }
-
-// //     // public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
-// //     // public void setMeetsQualityTarget(Boolean meetsQualityTarget) {
-// //     //     this.meetsQualityTarget = meetsQualityTarget;
-// //     // }
-// }
+    @GetMapping("/requirement/{reqId}")
+    @Operation(summary = "Get evaluations for requirement")
+    public ResponseEntity<List<DeliveryEvaluation>> getEvaluationsForRequirement(@PathVariable Long reqId) {
+        return ResponseEntity.ok(deliveryEvaluationService.getEvaluationsForRequirement(reqId));
+    }
+}
