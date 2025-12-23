@@ -1,7 +1,13 @@
+package com.example.demo.service;
+
+import com.example.demo.model.SLARequirement;
+import java.util.List;
+
 public interface SLARequirementService {
-    SLARequirement create(SLARequirement r);
-    SLARequirement update(Long id, SLARequirement r);
+
+    SLARequirement create(SLARequirement requirement);
+    SLARequirement update(Long id, SLARequirement requirement);
     SLARequirement getById(Long id);
     List<SLARequirement> getAll();
-    void delete(Long id);
+    SLARequirement deactivate(Long id);
 }

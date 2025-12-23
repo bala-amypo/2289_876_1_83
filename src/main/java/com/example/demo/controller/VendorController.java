@@ -10,42 +10,40 @@ import java.util.List;
 @RequestMapping("/api/vendors")
 public class VendorController {
 
-    private final VendorService vendorService;
+    private final VendorService service;
 
-    // Constructor injection
-    public VendorController(VendorService vendorService) {
-        this.vendorService = vendorService;
+    public VendorController(VendorService service) {
+        this.service = service;
     }
 
-    // CREATE
+    // POST /api/vendors
     @PostMapping
     public Vendor createVendor(@RequestBody Vendor vendor) {
-        return vendorService.createVendor(vendor);
+        return service.createVendor(vendor);
     }
 
-    // READ by ID
+    // PUT /api/vendors/{id}
+    @PutMapping("/{id}")
+    public Vendor updateVendor(@PathVariable Long id,
+                               @RequestBody Vendor vendor) {
+        return service.updateVendor(id, vendor);
+    }
+
+    // GET /api/vendors/{id}
     @GetMapping("/{id}")
     public Vendor getVendor(@PathVariable Long id) {
-        return vendorService.getVendorById(id);
+        return service.getVendor(id);
     }
 
-    // READ all
+    // GET /api/vendors
     @GetMapping
     public List<Vendor> getAllVendors() {
-        return vendorService.getAllVendors();
+        return service.getAllVendors();
     }
 
-    // UPDATE
-    @PutMapping("/{id}")
-    public Vendor updateVendor(
-            @PathVariable Long id,
-            @RequestBody Vendor vendor) {
-        return vendorService.updateVendor(id, vendor);
-    }
-
-    // DELETE
-    @DeleteMapping("/{id}")
-    public void deleteVendor(@PathVariable Long id) {
-        vendorService.deleteVendor(id);
+    // PUT /api/vendors/{id}/deactivate
+    @PutMapping("/{id}/deactivate")
+    public Vendor deactivateVendor(@PathVariable Long id) {
+        return service.deactivateVendor(id);
     }
 }
