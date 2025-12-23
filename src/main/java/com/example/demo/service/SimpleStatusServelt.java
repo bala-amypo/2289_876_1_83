@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.service;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -6,19 +6,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SimpleStatusServlet extends HttpServlet {
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(200);
-        response.setContentType("text/plain");
-        response.getWriter().write("OK");
-    }
 
     @Override
-    public void init() {
-    }
-
-    @Override
-    public void destroy() {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("text/plain");
+        resp.getWriter().write("OK");
     }
 }
