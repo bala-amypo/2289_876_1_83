@@ -1,17 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.VendorDTO;
 import com.example.demo.model.Vendor;
+
 import java.util.List;
 
 public interface VendorService {
 
-    Vendor createVendor(Vendor vendor);
-
-    Vendor updateVendor(Long id, Vendor vendor);
-
-    Vendor getVendorById(Long id);
-
+    Vendor createVendor(VendorDTO dto);
+    Vendor updateVendor(Long id, VendorDTO dto);
+    Vendor getVendor(Long id);
     List<Vendor> getAllVendors();
-
-    void deleteVendor(Long id);
+    Vendor deactivateVendor(Long id);
 }
