@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VendorTierRepository
         extends JpaRepository<VendorTier, Long> {
+
+    // Used in VendorTierServiceImpl
+    boolean existsByTierName(String tierName);
 }
