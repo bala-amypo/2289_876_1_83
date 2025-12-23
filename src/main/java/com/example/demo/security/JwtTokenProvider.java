@@ -1,29 +1,59 @@
 package com.example.demo.security;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.util.Date;
+
+@Component
 public class JwtTokenProvider {
 
-    public JwtTokenProvider() {
-    }
+    // 🔐 Secret key (must be at least 256 bits for HS256)
+    private static final String SECRET =
+            "mysecretkeymysecretkeymysecretkeymysecretkey";
 
-    public JwtTokenProvider(String secret, long validityInMs) {
-        // values ignored for test safety
-    }
+    private static final long EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 1 day
 
+    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    // ✅ CREATE JWT TOKEN (USED IN AuthController)
     public String createToken(String email, String role, Long userId) {
-        // Simple fake token (tests only check non-null)
-        return email + ":" + role + ":" + userId;
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("role", role)
+                .claim("userId", userId)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    public Map<String, Object> getClaims(String token) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("token", token);
-        return claims;
+    // ✅ EXTRACT CLAIMS
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
+    // ✅ EXTRACT EMAIL (SUBJECT)
+    public String getEmailFromToken(String token) {
+        return getClaims(token).getSubject();
+    }
+
+    // ✅ TOKEN VALIDATION
     public boolean validateToken(String token) {
-        return token != null && !token.isEmpty();
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
