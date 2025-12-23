@@ -10,34 +10,42 @@ import java.util.List;
 @RequestMapping("/api/vendors")
 public class VendorController {
 
-    private final VendorService service;
+    private final VendorService vendorService;
 
-    public VendorController(VendorService service) {
-        this.service = service;
+    // Constructor injection
+    public VendorController(VendorService vendorService) {
+        this.vendorService = vendorService;
     }
 
+    // CREATE
     @PostMapping
-    public Vendor create(@RequestBody Vendor vendor) {
-        return service.create(vendor);
+    public Vendor createVendor(@RequestBody Vendor vendor) {
+        return vendorService.createVendor(vendor);
     }
 
+    // READ by ID
     @GetMapping("/{id}")
-    public Vendor get(@PathVariable Long id) {
-        return service.getById(id);
+    public Vendor getVendor(@PathVariable Long id) {
+        return vendorService.getVendorById(id);
     }
 
+    // READ all
     @GetMapping
-    public List<Vendor> all() {
-        return service.getAll();
+    public List<Vendor> getAllVendors() {
+        return vendorService.getAllVendors();
     }
 
+    // UPDATE
     @PutMapping("/{id}")
-    public Vendor update(@PathVariable Long id, @RequestBody Vendor vendor) {
-        return service.update(id, vendor);
+    public Vendor updateVendor(
+            @PathVariable Long id,
+            @RequestBody Vendor vendor) {
+        return vendorService.updateVendor(id, vendor);
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public void deleteVendor(@PathVariable Long id) {
+        vendorService.deleteVendor(id);
     }
 }

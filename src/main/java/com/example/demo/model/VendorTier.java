@@ -1,41 +1,69 @@
-// package com.example.demo.model;
+package com.example.demo.model;
 
-// import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-// @Entity
-// @Table(
-//     name = "vendor_tiers",
-//     uniqueConstraints = @UniqueConstraint(columnNames = "tierName")
-// )
-// public class VendorTier {
+@Entity
+public class Vendor {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     private String tierName;
-//     private Double minScoreThreshold;
-//     private String description;
+    private String name;
+    private String contactEmail;
+    private String contactPhone;
+    private Boolean active;
 
-//     private Boolean active = true;
+    // No-arg constructor (JPA mandatory)
+    public Vendor() {
+        this.active = true;
+    }
 
+    // Parameterized constructor
+    public Vendor(String name, String contactEmail, String contactPhone) {
+        this.name = name;
+        this.contactEmail = contactEmail;
+        this.contactPhone = contactPhone;
+        this.active = true;
+    }
 
-//     public Long getId() { return id; }
-//     public void setId(Long id) { this.id = id; }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-//     public String getTierName() { return tierName; }
-//     public void setTierName(String tierName) { this.tierName = tierName; }
+    public String getName() {
+        return name;
+    }
 
-//     public Double getMinScoreThreshold() { return minScoreThreshold; }
-//     public void setMinScoreThreshold(Double minScoreThreshold) {
-//         this.minScoreThreshold = minScoreThreshold;
-//     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-//     public String getDescription() { return description; }
-//     public void setDescription(String description) {
-//         this.description = description;
-//     }
+    public String getContactEmail() {
+        return contactEmail;
+    }
 
-//     public Boolean getActive() { return active; }
-//     public void setActive(Boolean active) { this.active = active; }
-// }
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+}
