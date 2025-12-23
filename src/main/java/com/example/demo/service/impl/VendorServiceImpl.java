@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.VendorDTO;
 import com.example.demo.model.Vendor;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorService;
@@ -18,28 +17,27 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Vendor createVendor(VendorDTO dto) {
-        repository.findByName(dto.getName())
+    public Vendor createVendor(Vendor vendor) {
+
+        repository.findByName(vendor.getName())
                 .ifPresent(v -> {
                     throw new IllegalArgumentException("Vendor name must be unique");
                 });
 
-        Vendor vendor = new Vendor();
-        vendor.setName(dto.getName());
-        vendor.setContactEmail(dto.getContactEmail());
-        vendor.setContactPhone(dto.getContactPhone());
-
+        vendor.setActive(true);
         return repository.save(vendor);
     }
 
     @Override
-    public Vendor updateVendor(Long id, VendorDTO dto) {
-        Vendor vendor = repository.findById(id)
+    public Vendor updateVendor(Long id, Vendor updatedVendor) {
+
+        Vendor existing = repository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Vendor not found"));
 
-        vendor.setContactEmail(dto.getContactEmail());
-        vendor.setContactPhone(dto.getContactPhone());
-        return repository.save(vendor);
+        existing.setContactEmail(updatedVendor.getContactEmail());
+        existing.setContactPhone(updatedVendor.getContactPhone());
+
+        return repository.save(existing);
     }
 
     @Override
@@ -55,6 +53,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Vendor deactivateVendor(Long id) {
+
         Vendor vendor = repository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Vendor not found"));
 

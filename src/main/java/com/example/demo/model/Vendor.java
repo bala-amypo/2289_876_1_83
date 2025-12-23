@@ -28,16 +28,13 @@ public class Vendor {
 
     private Instant updatedAt;
 
-    /* ================= CONSTRUCTORS ================= */
-
-    // Default constructor (required by JPA)
+    // ===== Constructors =====
     public Vendor() {
         this.active = true;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
 
-    // Parameterized constructor
     public Vendor(String name, String contactEmail, String contactPhone) {
         this.name = name;
         this.contactEmail = contactEmail;
@@ -47,59 +44,19 @@ public class Vendor {
         this.updatedAt = Instant.now();
     }
 
-    /* ================= GETTERS ================= */
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getContactEmail() { return contactEmail; }
+    public String getContactPhone() { return contactPhone; }
+    public Boolean getActive() { return active; }
+    public Instant getCreatedAt() { return createdAt; }
+    public Instant getUpdatedAt() { return updatedAt; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    /* ================= SETTERS ================= */
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
+    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
+    public void setActive(Boolean active) { this.active = active; }
+    public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
 }
