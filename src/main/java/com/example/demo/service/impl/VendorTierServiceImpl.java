@@ -3,45 +3,62 @@ package com.example.demo.service.impl;
 import com.example.demo.model.VendorTier;
 import com.example.demo.repository.VendorTierRepository;
 import com.example.demo.service.VendorTierService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class VendorTierServiceImpl implements VendorTierService {
 
-    private final VendorTierRepository repo;
+    private final VendorTierRepository repository;
 
-    public VendorTierServiceImpl(VendorTierRepository repo) {
-        this.repo = repo;
+    public VendorTierServiceImpl(VendorTierRepository repository) {
+        this.repository = repository;
     }
 
-    public VendorTier createTier(VendorTier tier) {
+    @Override
+    public VendorTier create(VendorTier tier) {
+
+        repository.findByTierName(tier.getTierName())
+                .ifPresent(t -> {
+                    throw new IllegalArgumentException("Tier name must be unique");
+                });
+
         if (tier.getMinScoreThreshold() < 0 || tier.getMinScoreThreshold() > 100) {
-            throw new IllegalArgumentException("0–100");
+            throw new IllegalArgumentException("Score threshold must be between 0 and 100");
         }
-        if (repo.existsByTierName(tier.getTierName())) {
-            throw new IllegalArgumentException("unique");
-        }
-        return repo.save(tier);
+
+        tier.setActive(true);
+        return repository.save(tier);
     }
 
-    public VendorTier updateTier(Long id, VendorTier tier) {
-        VendorTier t = getTierById(id);
-        t.setTierName(tier.getTierName());
-        return repo.save(t);
+    @Override
+    public VendorTier update(Long id, VendorTier updated) {
+
+        VendorTier existing = repository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Tier not found"));
+
+        existing.setDescription(updated.getDescription());
+        existing.setMinScoreThreshold(updated.getMinScoreThreshold());
+
+        return repository.save(existing);
     }
 
-    public VendorTier getTierById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tier not found"));
+    @Override
+    public VendorTier get(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Tier not found"));
     }
 
-    public List<VendorTier> getAllTiers() {
-        return repo.findAll();
+    @Override
+    public List<VendorTier> getAll() {
+        return repository.findAll();
     }
 
-    public void deactivateTier(Long id) {
-        VendorTier t = getTierById(id);
-        t.setActive(false);
-        repo.save(t);
+    @Override
+    public VendorTier deactivate(Long id) {
+        VendorTier tier = get(id);
+        tier.setActive(false);
+        return repository.save(tier);
     }
 }

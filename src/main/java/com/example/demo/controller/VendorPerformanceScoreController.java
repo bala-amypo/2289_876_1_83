@@ -1,72 +1,37 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.VendorPerformanceScore;
+import com.example.demo.service.VendorPerformanceScoreService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/scores")
 public class VendorPerformanceScoreController {
 
-    
-    /**
-     * Calculate score for a vendor
-     */
+    private final VendorPerformanceScoreService service;
+
+    public VendorPerformanceScoreController(
+            VendorPerformanceScoreService service) {
+        this.service = service;
+    }
+
+    // POST /api/scores/calculate/{vendorId}
     @PostMapping("/calculate/{vendorId}")
-    public String calculateScore(
-            @PathVariable Long vendorId) {
-
-        // VendorPerformanceScoreDto score =
-        //         vendorPerformanceScoreService.calculateScore(vendorId);
-        return "vendorId: "+ vendorId;
+    public VendorPerformanceScore calculate(@PathVariable Long vendorId) {
+        return service.calculateScore(vendorId);
     }
 
-    /**
-     * Get latest score for a vendor
-     */
+    // GET /api/scores/latest/{vendorId}
     @GetMapping("/latest/{vendorId}")
-    public String getLatestScore(
-            @PathVariable Long vendorId) {
-
-        // VendorPerformanceScoreDto latestScore =
-        //         vendorPerformanceScoreService.getLatestScore(vendorId);
-        return "vendorId: "+ vendorId;
+    public VendorPerformanceScore latest(@PathVariable Long vendorId) {
+        return service.getLatestScore(vendorId);
     }
 
-/**
-     * update latest score for a vendor
-     */
-    @PutMapping("/vendor/{vendorId}")
-    public String updateLatestScore(
-            @PathVariable Long vendorId) {
-
-        // VendorPerformanceScoreDto latestScore =
-        //         vendorPerformanceScoreService.getLatestScore(vendorId);
-        return "vendorId: "+ vendorId;
-    }
-
-    /**
-     * update latest score for a vendor
-     */
-    @DeleteMapping("/vendor/{vendorId}")
-    public String deleteLatestScore(
-            @PathVariable Long vendorId) {
-
-        // VendorPerformanceScoreDto latestScore =
-        //         vendorPerformanceScoreService.getLatestScore(vendorId);
-        return "vendorId: "+ vendorId;
-    }
-
-    /**
-     * Get score history for a vendor
-     */
+    // GET /api/scores/vendor/{vendorId}
     @GetMapping("/vendor/{vendorId}")
-    public String getScoreHistory(
-            @PathVariable Long vendorId) {
-
-        // List<VendorPerformanceScoreDto> scores =
-        //         vendorPerformanceScoreService.getScoreHistory(vendorId);
-        return "vendorId: "+ vendorId;
+    public List<VendorPerformanceScore> history(@PathVariable Long vendorId) {
+        return service.getScoreHistory(vendorId);
     }
 }

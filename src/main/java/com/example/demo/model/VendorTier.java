@@ -1,69 +1,50 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class Vendor {
+@Table(
+    name = "vendor_tier",
+    uniqueConstraints = @UniqueConstraint(columnNames = "tierName")
+)
+public class VendorTier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String contactEmail;
-    private String contactPhone;
+    @Column(nullable = false, unique = true)
+    private String tierName;
+
+    @Column(nullable = false)
+    private Double minScoreThreshold;
+
+    private String description;
+
+    @Column(nullable = false)
     private Boolean active;
 
-    // No-arg constructor (JPA mandatory)
-    public Vendor() {
+    // ===== Constructors =====
+    public VendorTier() {
         this.active = true;
     }
 
-    // Parameterized constructor
-    public Vendor(String name, String contactEmail, String contactPhone) {
-        this.name = name;
-        this.contactEmail = contactEmail;
-        this.contactPhone = contactPhone;
+    public VendorTier(String tierName, Double minScoreThreshold, String description) {
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
         this.active = true;
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public String getTierName() { return tierName; }
+    public Double getMinScoreThreshold() { return minScoreThreshold; }
+    public String getDescription() { return description; }
+    public Boolean getActive() { return active; }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public void setTierName(String tierName) { this.tierName = tierName; }
+    public void setMinScoreThreshold(Double minScoreThreshold) { this.minScoreThreshold = minScoreThreshold; }
+    public void setDescription(String description) { this.description = description; }
+    public void setActive(Boolean active) { this.active = active; }
 }
