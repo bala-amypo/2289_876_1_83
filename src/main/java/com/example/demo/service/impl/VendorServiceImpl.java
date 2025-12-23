@@ -1,3 +1,12 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.model.Vendor;
+import com.example.demo.repository.VendorRepository;
+import com.example.demo.service.VendorService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class VendorServiceImpl implements VendorService {
 
@@ -7,22 +16,30 @@ public class VendorServiceImpl implements VendorService {
         this.repo = repo;
     }
 
-    public Vendor create(Vendor v) { return repo.save(v); }
+    public Vendor create(Vendor vendor) {
+        return repo.save(vendor);
+    }
 
-    public Vendor update(Long id, Vendor v) {
-        Vendor e = repo.findById(id).orElseThrow(() -> new RuntimeException("not found"));
-        e.setName(v.getName());
-        e.setContactEmail(v.getContactEmail());
-        e.setContactPhone(v.getContactPhone());
-        e.setActive(v.getActive());
-        return repo.save(e);
+    public Vendor update(Long id, Vendor vendor) {
+        Vendor v = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        v.setName(vendor.getName());
+        v.setContactEmail(vendor.getContactEmail());
+        v.setContactPhone(vendor.getContactPhone());
+        v.setActive(vendor.getActive());
+        return repo.save(v);
     }
 
     public Vendor getById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("not found"));
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public List<Vendor> getAll() { return repo.findAll(); }
+    public List<Vendor> getAll() {
+        return repo.findAll();
+    }
 
-    public void delete(Long id) { repo.deleteById(id); }
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 }

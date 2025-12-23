@@ -12,7 +12,18 @@ public class Vendor {
     private String name;
     private String contactEmail;
     private String contactPhone;
-    private Boolean active = true;
+    private Boolean active;
+
+    public Vendor() {
+        this.active = true;
+    }
+
+    public Vendor(String name, String contactEmail, String contactPhone) {
+        this.name = name;
+        this.contactEmail = contactEmail;
+        this.contactPhone = contactPhone;
+        this.active = true;
+    }
 
     public Long getId() { return id; }
     public String getName() { return name; }
