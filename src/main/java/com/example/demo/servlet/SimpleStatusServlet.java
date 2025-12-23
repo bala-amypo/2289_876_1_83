@@ -1,17 +1,17 @@
-package com.example.demo.servlet;
+// package com.example.demo.servlet;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+// import jakarta.servlet.http.HttpServlet;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+// import java.io.IOException;
 
-public class SimpleStatusServlet extends HttpServlet {
+// public class SimpleStatusServlet extends HttpServlet {
 
-    // @Override
-    // protected String doGet(HttpServletRequest req, HttpServletResponse resp)
-    //         throws IOException {
-    //     resp.setContentType("text/plain");
-    //     resp.getWriter().write("OK");
-    //     return "OK";
-    // }
-}
+//     // @Override
+//     // protected String doGet(HttpServletRequest req, HttpServletResponse resp)
+//     //         throws IOException {
+//     //     resp.setContentType("text/plain");
+//     //     resp.getWriter().write("OK");
+//     //     return "OK";
+//     // }
+// }

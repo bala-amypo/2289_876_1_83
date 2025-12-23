@@ -4,9 +4,9 @@ import com.example.demo.model.Vendor;
 import java.util.List;
 
 public interface VendorService {
-    Vendor createVendor(Vendor vendor);
-    Vendor updateVendor(Long id, Vendor vendor);
-    Vendor getVendorById(Long id);
-    List<Vendor> getAllVendors();
-    void deactivateVendor(Long id);
+    Vendor create(Vendor vendor);
+    Vendor update(Long id, Vendor vendor);
+    Vendor getById(Long id);
+    List<Vendor> getAll();
+    void delete(Long id);
 }

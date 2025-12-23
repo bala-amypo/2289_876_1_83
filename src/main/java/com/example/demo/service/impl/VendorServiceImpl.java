@@ -1,11 +1,4 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.model.Vendor;
-import com.example.demo.repository.VendorRepository;
-import com.example.demo.service.VendorService;
-
-import java.util.List;
-
+@Service
 public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository repo;
@@ -14,32 +7,22 @@ public class VendorServiceImpl implements VendorService {
         this.repo = repo;
     }
 
-    public Vendor createVendor(Vendor vendor) {
-        if (repo.existsByName(vendor.getName())) {
-            throw new IllegalArgumentException("Vendor name must be unique");
-        }
-        vendor.setActive(true);
-        return repo.save(vendor);
+    public Vendor create(Vendor v) { return repo.save(v); }
+
+    public Vendor update(Long id, Vendor v) {
+        Vendor e = repo.findById(id).orElseThrow(() -> new RuntimeException("not found"));
+        e.setName(v.getName());
+        e.setContactEmail(v.getContactEmail());
+        e.setContactPhone(v.getContactPhone());
+        e.setActive(v.getActive());
+        return repo.save(e);
     }
 
-    public Vendor updateVendor(Long id, Vendor vendor) {
-        Vendor existing = getVendorById(id);
-        existing.setName(vendor.getName());
-        return repo.save(existing);
+    public Vendor getById(Long id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public Vendor getVendorById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
-    }
+    public List<Vendor> getAll() { return repo.findAll(); }
 
-    public List<Vendor> getAllVendors() {
-        return repo.findAll();
-    }
-
-    public void deactivateVendor(Long id) {
-        Vendor v = getVendorById(id);
-        v.setActive(false);
-        repo.save(v);
-    }
+    public void delete(Long id) { repo.deleteById(id); }
 }
