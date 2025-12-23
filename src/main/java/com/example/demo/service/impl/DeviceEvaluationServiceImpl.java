@@ -1,60 +1,59 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.DeliveryEvaluation;
+import com.example.demo.model.SLARequirement;
+import com.example.demo.repository.DeliveryEvaluationRepository;
 import com.example.demo.service.DeliveryEvaluationService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService {
 
-    private final DeliveryEvaluationRepository evalRepo;
-    private final VendorRepository vendorRepo;
-    private final SLARequirementRepository slaRepo;
+    private final DeliveryEvaluationRepository repository;
 
-    public DeliveryEvaluationServiceImpl(
-            DeliveryEvaluationRepository evalRepo,
-            VendorRepository vendorRepo,
-            SLARequirementRepository slaRepo) {
-        this.evalRepo = evalRepo;
-        this.vendorRepo = vendorRepo;
-        this.slaRepo = slaRepo;
+    public DeliveryEvaluationServiceImpl(DeliveryEvaluationRepository repository) {
+        this.repository = repository;
     }
 
-    public DeliveryEvaluation createEvaluation(DeliveryEvaluation e) {
-        Vendor vendor = vendorRepo.findById(e.getVendor().getId())
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
+    @Override
+    public DeliveryEvaluation create(DeliveryEvaluation eval) {
 
-        if (!vendor.getActive()) {
-            throw new IllegalStateException("Only active vendors allowed");
+        if (eval.getActualDeliveryDays() < 0) {
+            throw new IllegalArgumentException("Max delivery days must be >= 0");
         }
 
-        SLARequirement sla = slaRepo.findById(e.getSlaRequirement().getId())
-                .orElseThrow(() -> new RuntimeException("SLA not found"));
-
-        if (e.getActualDeliveryDays() < 0) {
-            throw new IllegalArgumentException(">= 0");
-        }
-        if (e.getQualityScore() < 0 || e.getQualityScore() > 100) {
-            throw new IllegalArgumentException("between 0 and 100");
+        if (eval.getQualityScore() < 0 || eval.getQualityScore() > 100) {
+            throw new IllegalArgumentException("Quality score must be between 0 and 100");
         }
 
-        e.setMeetsDeliveryTarget(e.getActualDeliveryDays() <= sla.getMaxDeliveryDays());
-        e.setMeetsQualityTarget(e.getQualityScore() >= sla.getMinQualityScore());
+        SLARequirement sla = eval.getSlaRequirement();
 
-        return evalRepo.save(e);
+        eval.setMeetsDeliveryTarget(
+                eval.getActualDeliveryDays() <= sla.getMaxDeliveryDays()
+        );
+
+        eval.setMeetsQualityTarget(
+                eval.getQualityScore() >= sla.getMinQualityScore()
+        );
+
+        return repository.save(eval);
     }
 
-    public DeliveryEvaluation getEvaluationById(Long id) {
-        return evalRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluation not found"));
+    @Override
+    public DeliveryEvaluation getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Evaluation not found"));
     }
 
-    public List<DeliveryEvaluation> getEvaluationsForVendor(Long vendorId) {
-        return evalRepo.findByVendorId(vendorId);
+    @Override
+    public List<DeliveryEvaluation> getByVendor(Long vendorId) {
+        return repository.findByVendorId(vendorId);
     }
 
-    public List<DeliveryEvaluation> getEvaluationsForRequirement(Long requirementId) {
-        return evalRepo.findBySlaRequirementId(requirementId);
+    @Override
+    public List<DeliveryEvaluation> getByRequirement(Long reqId) {
+        return repository.findBySlaRequirementId(reqId);
     }
 }

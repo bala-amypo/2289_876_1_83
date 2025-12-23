@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "delivery_evaluation")
@@ -10,75 +11,39 @@ public class DeliveryEvaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Vendor reference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id", nullable = false)
+    @ManyToOne(optional = false)
     private Vendor vendor;
 
-    // SLA requirement reference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sla_requirement_id", nullable = false)
+    @ManyToOne(optional = false)
     private SLARequirement slaRequirement;
 
-    private int actualDeliveryDays;
-    private int qualityScore;
+    private Integer actualDeliveryDays;
+    private Double qualityScore;
 
-    private boolean meetsDeliveryTarget;
-    private boolean meetsQualityTarget;
+    private LocalDate evaluationDate;
 
-    // ===== GETTERS =====
+    private Boolean meetsDeliveryTarget;
+    private Boolean meetsQualityTarget;
 
-    public Long getId() {
-        return id;
+    // ===== Constructors =====
+    public DeliveryEvaluation() {
+        this.evaluationDate = LocalDate.now();
     }
 
-    public Vendor getVendor() {
-        return vendor;
-    }
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public Vendor getVendor() { return vendor; }
+    public SLARequirement getSlaRequirement() { return slaRequirement; }
+    public Integer getActualDeliveryDays() { return actualDeliveryDays; }
+    public Double getQualityScore() { return qualityScore; }
+    public LocalDate getEvaluationDate() { return evaluationDate; }
+    public Boolean getMeetsDeliveryTarget() { return meetsDeliveryTarget; }
+    public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
 
-    public SLARequirement getSlaRequirement() {
-        return slaRequirement;
-    }
-
-    public int getActualDeliveryDays() {
-        return actualDeliveryDays;
-    }
-
-    public int getQualityScore() {
-        return qualityScore;
-    }
-
-    public boolean getMeetsDeliveryTarget() {
-        return meetsDeliveryTarget;
-    }
-
-    public boolean getMeetsQualityTarget() {
-        return meetsQualityTarget;
-    }
-
-    // ===== SETTERS =====
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
-    }
-
-    public void setSlaRequirement(SLARequirement slaRequirement) {
-        this.slaRequirement = slaRequirement;
-    }
-
-    public void setActualDeliveryDays(int actualDeliveryDays) {
-        this.actualDeliveryDays = actualDeliveryDays;
-    }
-
-    public void setQualityScore(int qualityScore) {
-        this.qualityScore = qualityScore;
-    }
-
-    public void setMeetsDeliveryTarget(boolean meetsDeliveryTarget) {
-        this.meetsDeliveryTarget = meetsDeliveryTarget;
-    }
-
-    public void setMeetsQualityTarget(boolean meetsQualityTarget) {
-        this.meetsQualityTarget = meetsQualityTarget;
-    }
+    public void setVendor(Vendor vendor) { this.vendor = vendor; }
+    public void setSlaRequirement(SLARequirement slaRequirement) { this.slaRequirement = slaRequirement; }
+    public void setActualDeliveryDays(Integer actualDeliveryDays) { this.actualDeliveryDays = actualDeliveryDays; }
+    public void setQualityScore(Double qualityScore) { this.qualityScore = qualityScore; }
+    public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) { this.meetsDeliveryTarget = meetsDeliveryTarget; }
+    public void setMeetsQualityTarget(Boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
 }

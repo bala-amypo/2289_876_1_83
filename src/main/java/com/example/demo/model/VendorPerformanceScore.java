@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
-@Table(name = "vendor_performance_scores")
+@Table(name = "vendor_performance_score")
 public class VendorPerformanceScore {
 
     @Id
@@ -18,32 +18,26 @@ public class VendorPerformanceScore {
     private Double qualityCompliancePercentage;
     private Double overallScore;
 
-    private Timestamp calculatedAt;
+    private Instant calculatedAt;
 
-  
+    // ===== Constructors =====
+    public VendorPerformanceScore() {
+        this.calculatedAt = Instant.now();
+    }
+
+    // ===== Getters =====
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public Vendor getVendor() { return vendor; }
-    public void setVendor(Vendor vendor) { this.vendor = vendor; }
-
     public Double getOnTimePercentage() { return onTimePercentage; }
-    public void setOnTimePercentage(Double onTimePercentage) {
-        this.onTimePercentage = onTimePercentage;
-    }
+    public Double getQualityCompliancePercentage() { return qualityCompliancePercentage; }
+    public Double getOverallScore() { return overallScore; }
+    public Instant getCalculatedAt() { return calculatedAt; }
 
-    public Double getQualityCompliancePercentage() {
-        return qualityCompliancePercentage;
-    }
+    // ===== Setters =====
+    public void setVendor(Vendor vendor) { this.vendor = vendor; }
+    public void setOnTimePercentage(Double onTimePercentage) { this.onTimePercentage = onTimePercentage; }
     public void setQualityCompliancePercentage(Double qualityCompliancePercentage) {
         this.qualityCompliancePercentage = qualityCompliancePercentage;
     }
-
-    public Double getOverallScore() { return overallScore; }
     public void setOverallScore(Double overallScore) { this.overallScore = overallScore; }
-
-    public Timestamp getCalculatedAt() { return calculatedAt; }
-    public void setCalculatedAt(Timestamp calculatedAt) {
-        this.calculatedAt = calculatedAt;
-    }
 }
