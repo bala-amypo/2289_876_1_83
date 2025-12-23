@@ -1,2 +1,2 @@
-// public interface SLARequirementRepository
-//         extends JpaRepository<SLARequirement, Long> {}
+public interface SLARequirementRepository
+        extends JpaRepository<SLARequirement, Long> {}
