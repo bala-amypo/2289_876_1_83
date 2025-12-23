@@ -1,26 +1,15 @@
-package com.example.demo.model;
+package com.example.demo.service;
 
-import jakarta.persistence.*;
-import java.util.Date;
+import com.example.demo.model.DeliveryEvaluation;
+import java.util.List;
 
-@Entity
-public class DeliveryEvaluation {
+public interface DeliveryEvaluationService {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    DeliveryEvaluation createEvaluation(DeliveryEvaluation evaluation);
 
-    @ManyToOne
-    private Vendor vendor;
+    DeliveryEvaluation getEvaluationById(Long id);
 
-    @ManyToOne
-    private SLARequirement slaRequirement;
+    List<DeliveryEvaluation> getEvaluationsForVendor(Long vendorId);
 
-    private Integer actualDeliveryDays;
-    private Double qualityScore;
-    private Date evaluationDate;
-    private Boolean meetsDeliveryTarget;
-    private Boolean meetsQualityTarget;
-
-    // getters and setters
+    List<DeliveryEvaluation> getEvaluationsForRequirement(Long requirementId);
 }
