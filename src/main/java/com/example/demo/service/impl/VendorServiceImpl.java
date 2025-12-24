@@ -4,60 +4,56 @@ import com.example.demo.model.Vendor;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class VendorServiceImpl implements VendorService {
-
-    private final VendorRepository repository;
-
-    public VendorServiceImpl(VendorRepository repository) {
-        this.repository = repository;
+    private final VendorRepository vendorRepository;
+    
+    public VendorServiceImpl(VendorRepository vendorRepository) {
+        this.vendorRepository = vendorRepository;
     }
-
+    
     @Override
     public Vendor createVendor(Vendor vendor) {
-
-        repository.findByName(vendor.getName())
-                .ifPresent(v -> {
-                    throw new IllegalArgumentException("Vendor name must be unique");
-                });
-
-        vendor.setActive(true);
-        return repository.save(vendor);
+        if (vendorRepository.existsByName(vendor.getName())) {
+            throw new IllegalArgumentException("Vendor name must be unique");
+        }
+        return vendorRepository.save(vendor);
     }
-
+    
     @Override
-    public Vendor updateVendor(Long id, Vendor updatedVendor) {
-
-        Vendor existing = repository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Vendor not found"));
-
-        existing.setContactEmail(updatedVendor.getContactEmail());
-        existing.setContactPhone(updatedVendor.getContactPhone());
-
-        return repository.save(existing);
+    public Vendor updateVendor(Long id, Vendor vendor) {
+        Vendor existing = vendorRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Vendor not found"));
+        
+        if (vendor.getName() != null && !vendor.getName().equals(existing.getName()) 
+            && vendorRepository.existsByName(vendor.getName())) {
+            throw new IllegalArgumentException("Vendor name must be unique");
+        }
+        
+        if (vendor.getContactEmail() != null) existing.setContactEmail(vendor.getContactEmail());
+        if (vendor.getContactPhone() != null) existing.setContactPhone(vendor.getContactPhone());
+        if (vendor.getName() != null) existing.setName(vendor.getName());
+        
+        return vendorRepository.save(existing);
     }
-
+    
     @Override
-    public Vendor getVendor(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Vendor not found"));
+    public Vendor getVendorById(Long id) {
+        return vendorRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Vendor not found"));
     }
-
+    
     @Override
     public List<Vendor> getAllVendors() {
-        return repository.findAll();
+        return vendorRepository.findAll();
     }
-
+    
     @Override
-    public Vendor deactivateVendor(Long id) {
-
-        Vendor vendor = repository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Vendor not found"));
-
+    public void deactivateVendor(Long id) {
+        Vendor vendor = getVendorById(id);
         vendor.setActive(false);
-        return repository.save(vendor);
+        vendorRepository.save(vendor);
     }
 }
