@@ -1,10 +1,12 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Vendor;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorService;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class VendorServiceImpl implements VendorService {
