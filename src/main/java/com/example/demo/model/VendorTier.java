@@ -1,12 +1,41 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
-import com.example.demo.model.VendorTier;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.List;
+import jakarta.persistence.*;
 
-@Repository
-public interface VendorTierRepository extends JpaRepository<VendorTier, Long> {
-    boolean existsByTierName(String tierName);
-    List<VendorTier> findByActiveTrueOrderByMinScoreThresholdDesc();
+@Entity
+@Table(name = "vendor_tiers")
+public class VendorTier {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(unique = true, nullable = false)
+    private String tierName;
+    
+    private Double minScoreThreshold;
+    private String description;
+    private Boolean active = true;
+    
+    public VendorTier() {}
+    
+    public VendorTier(String tierName, Double minScoreThreshold, String description) {
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
+    }
+    
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
+    public String getTierName() { return tierName; }
+    public void setTierName(String tierName) { this.tierName = tierName; }
+    
+    public Double getMinScoreThreshold() { return minScoreThreshold; }
+    public void setMinScoreThreshold(Double minScoreThreshold) { this.minScoreThreshold = minScoreThreshold; }
+    
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }
