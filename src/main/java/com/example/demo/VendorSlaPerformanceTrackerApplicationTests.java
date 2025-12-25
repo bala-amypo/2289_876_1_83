@@ -1,11 +1,12 @@
 package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootApplication
-public class VendorSlaPerformanceTrackerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(VendorSlaPerformanceTrackerApplication.class, args);
+@SpringBootTest
+class VendorSlaPerformanceTrackerApplicationTests {
+
+    @Test
+    void contextLoads() {
     }
 }
