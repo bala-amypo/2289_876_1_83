@@ -107,6 +107,10 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version> <!-- Check Maven Central for the latest compatible version -->
         </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 
 
         <dependency>
@@ -121,15 +125,6 @@
     <artifactId>spring-boot-starter-security</artifactId>
 </dependency> -->
 
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-test</artifactId>
-    <scope>test</scope>
-</dependency>
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
 
     </dependencies>
 
@@ -167,7 +162,7 @@
     </build>
 
 
-</project>    check this is correct.if wrong change it to run all testcases 
+</project>
 
 
 
